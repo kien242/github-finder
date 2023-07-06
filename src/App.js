@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Button from '@mui/material/Button';
+import { Box, Grid, IconButton, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send'
+import * as UserCard from './Component/UserCard';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <UserCard.UserCard
+      user={{
+        name: "ZMK firmware",
+        twitter: "@johndoe",
+        avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
+      }}
+    />
+  )
 }
 
 export default App;

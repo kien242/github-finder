@@ -1,0 +1,28 @@
+.UserContainer {
+    border: solid 2px black;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.UserName {
+    border: solid 2px green;
+}
+
+.UserAvatarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    width: 80%;
+    height: 80%;
+}
+
+.border{
+    border: solid 2px green;
+}
+
+h5{
+    text-align: center;
+    margin: 0;
+}

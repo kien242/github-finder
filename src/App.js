@@ -1,13 +1,15 @@
 import * as UserCard from './Component/UserCard';
-import { Grid } from '@mui/material';
+import { Grid, Switch, FormControlLabel } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { Grid_custom_theme } from './Assets/Config/Global/Grid_custom';
+import { Grid_custom_theme } from './Assets/Config/Themes/Component_theme/Grid_custom';
+import TogleSwitch from './Component/TogleMode/TogleSwitch';
 
 function App() {
   return (
     <ThemeProvider theme={Grid_custom_theme}>
       <Grid container spacing={2} display={'flex'} flexDirection={'column'} justifyContent={'start'} >
-        <Grid item xs={4} border={2}
+        <Grid
+          item xs={4} border={2}
         >
           <UserCard.UserCard
             user={{
@@ -25,7 +27,9 @@ function App() {
             }}
           />
         </Grid>
-        <Grid item xs={6} border={2}>
+        <Grid
+          item xs={6} border={2}
+        >
           <UserCard.UserCard
             user={{
               name: "ZMK firmware",
@@ -42,6 +46,8 @@ function App() {
             }}
           />
         </Grid>
+
+        <TogleSwitch />
       </Grid>
     </ThemeProvider>
   )

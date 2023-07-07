@@ -1,0 +1,9 @@
+.MuiGrid-root {
+    margin: 0;
+    padding: 0;
+}
+
+.MuiGrid-root .MuiGrid-item {
+    margin: 0;
+    padding: 0;
+}

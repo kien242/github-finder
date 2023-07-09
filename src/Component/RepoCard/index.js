@@ -1,36 +1,30 @@
-import React from 'react'
-import "bootstrap/dist/css/bootstrap.min.css"
-import style from "./style.module.scss"
-import { Container } from 'react-bootstrap';
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 
 export const showRepo = (props) => {
   return (
-    <>
-      <div className="card my-4" style={{ maxHeight: 150 }}>
-        <div className="row g-2 my-1">
-          <div className={`col-10 ${style.borderRight}`}>
-            <Container fluid>
-            <div className={`${style.centerBlock}`}>
-                <p className={`${style.p}`}>dkh</p>
-              </div>
-              <div>
-                <p className={`${style.p}`}>adfad</p>
-              </div>
-              <div>adklhb</div>
-            </Container>
-          </div>
-          <div className={`col-2`}>
-            <div className={`container`}>
-              <div className='row'>
-                <button type="button" className="btn btn-primary m-1">Clone</button>
-              </div>
-              <div className='row'>
-                <button type="button" className="btn btn-primary m-1">Clone with sub-module</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Card sx={{ maxWidth: "90%", border:2 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image="https://marmelab.com/posters/avatar-46.jpeg"
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Lizard
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   )
 }

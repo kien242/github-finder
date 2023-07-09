@@ -1,8 +1,9 @@
 import * as UserCard from './Component/UserCard';
-import { Grid, Switch, FormControlLabel } from '@mui/material';
+import { Grid } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { Grid_custom_theme } from './Assets/Config/Themes/Component_theme/Grid_custom';
+import { Grid_custom_theme } from './Assets/Config/Themes/Component_theme/Grid/Grid_custom';
 import TogleSwitch from './Component/TogleMode/TogleSwitch';
+import * as showRepo  from './Component/RepoCard';
 
 function App() {
   return (
@@ -46,8 +47,8 @@ function App() {
             }}
           />
         </Grid>
-
         <TogleSwitch />
+        <showRepo.showRepo/>
       </Grid>
     </ThemeProvider>
   )

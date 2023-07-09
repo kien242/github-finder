@@ -1,30 +1,45 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { Box, Grid, Button, Card, Tooltip } from '@mui/material';
+import CopyAllIcon from '@mui/icons-material/CopyAll';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 export const showRepo = (props) => {
   return (
-    <Card sx={{ maxWidth: "90%", border:2 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://marmelab.com/posters/avatar-46.jpeg"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+    <Card sx={{ flexGrow: 1, maxWidth: "55%", border: 3, borderRadius: 5, padding: 3,borderColor: 'primary.main' }}>
+      <Grid container maxWidth={"100%"} spacing={4} >
+        <Grid item xs={10} borderRight={5}>
+          <Box sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: 30, }}>Repo Name</Box>
+          <Box sx={{ fontSize: 25 }}> Des</Box>
+          <Box>
+            <Grid container sx={{
+              maxWidth: "100%",
+              justifyContent: 'space-around'
+            }}>
+              <Box sx={{ maxWidth: "25%" }}>adfhjdfasdhfkjh  </Box>
+              <Box sx={{ maxWidth: "25%" }}>adfhj</Box>
+              <Box sx={{ maxWidth: "25%" }}>adfhj</Box>
+            </Grid>
+
+          </Box>
+        </Grid>
+        <Grid item xs={2} >
+          <Box
+            sx={{
+              margin: "4%",
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <Tooltip title="Clone" placement="right-start">
+              <Button variant="contained" ><CopyAllIcon /></Button>
+            </Tooltip>
+          </Box>
+          <Box sx={{ margin: "4%", display: 'flex', justifyContent: 'center' }}>
+            <Tooltip title="Clone with sub-module" placement="right-start">
+              <Button variant="contained" ><FileCopyIcon /></Button>
+            </Tooltip>
+          </Box>
+        </Grid>
+      </Grid>
     </Card>
   )
 }

@@ -2,7 +2,13 @@ import { Card, CardContent, Avatar, Box, Typography, IconButton, CardActionArea 
 import AddIcon from "@mui/icons-material/Add";
 
 export const UserCard = ({ user }) => (
-  <Card sx={{ display: "inline-block", bgcolor: "green", m: 1 , borderRadius:4}}>
+  <Card sx={{
+    maxWidth: user.maxWidth,
+    display: "inline-block",
+    bgcolor: "green",
+    m: 1,
+    borderRadius: 4
+  }}>
     <CardContent
       sx={{
         display: "flex",
@@ -18,11 +24,11 @@ export const UserCard = ({ user }) => (
       />
 
       <CardActionArea>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center"
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center"
+          }}>
           <Box px={3}>
             <Typography variant="h6" sx={{ lineHeight: 1 }}>
               {user.name}
@@ -45,7 +51,7 @@ export const UserCard = ({ user }) => (
           >
             <AddIcon />
           </IconButton>
-      </Box>
+        </Box>
       </CardActionArea>
     </CardContent>
   </Card>

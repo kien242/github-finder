@@ -5,7 +5,14 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 export const showRepo = (props) => {
   return (
-    <Card sx={{ flexGrow: 1, maxWidth: "55%", border: 3, borderRadius: 5, padding: 3,borderColor: 'primary.main' }}>
+    <Card sx={{ 
+      flexGrow: 1, 
+      maxWidth: "80%", 
+      border: 3, 
+      borderRadius: 5, 
+      padding: 3,
+      borderColor: 'primary.main'
+      }}>
       <Grid container maxWidth={"100%"} spacing={4} >
         <Grid item xs={10} borderRight={5}>
           <Box sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: 30, }}>Repo Name</Box>

@@ -46,7 +46,7 @@ export default function RecipeReviewCard() {
           <ExpandMoreIcon />
         </ExpandMore>
         }
-        title="REPO NAME"
+        title="zmk-docker"
         subheader=" Star   follower     fork  license  lang"
       />
       <CardContent>

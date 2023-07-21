@@ -6,12 +6,11 @@ import { darkTheme } from './Assets/Config/Themes/Global_theme/Darkmode';
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <Grid container spacing={2} display={'flex'} justifyContent={'center'} >
-        <CollapsibleTable />
-      </Grid>
+      <Grid container spacing={3} display={'flex'} justifyContent={'center'} >
+          <CollapsibleTable />
+        </Grid>
     </ThemeProvider>
   )
 }
-
 
 export default App;

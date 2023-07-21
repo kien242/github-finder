@@ -29,7 +29,7 @@ export default function RecipeReviewCard() {
   };
 
   return (
-    <Card sx={{ width:'60%', marginTop:'50px', borderRadius:3}}>
+    <Card sx={{borderRadius:3, marginBottom:2}}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500], variant:'rounded' }} >
@@ -70,14 +70,6 @@ export default function RecipeReviewCard() {
             pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
             stirring often until thickened and fragrant, about 10 minutes. Add
             saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is absorbed,
-            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without
-            stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don&apos;t open.)
           </Typography>
         </CardContent>
       </Collapse>

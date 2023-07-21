@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 export const UserCard = ({ user }) => (
   <Card sx={{
-    maxWidth: user.maxWidth,
+    maxWidth: "100%",
     display: "inline-block",
     bgcolor: "green",
     m: 1,

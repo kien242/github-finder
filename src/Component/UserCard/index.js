@@ -17,7 +17,7 @@ export const UserCard = ({ props }) => {
       borderRadius: 3,
       bgcolor:isActive ? "Yellow" : "",
     }} >
-      <CardActionArea onClick={()=>{handleClick(); renderRepo()}} >
+      <CardActionArea onClick={()=>{handleClick(); /*renderRepo()*/}} >
         <CardContent
           sx={{
             display: "flex",

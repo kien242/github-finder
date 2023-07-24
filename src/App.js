@@ -14,12 +14,48 @@ import RepoCard from './Component/RepoCard';
 import { TextField } from '@mui/material';
 
 const drawerWidth = 350;
+const userData = [
+  {
+    name: "ZMK firmware",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZMK firmware",
+    twitter: "kien24",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZMK frmware",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZMK firmware",
+    twitter: "kie42",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZMKware",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  }
+]
 
 function App(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isRenderRepoCard, setIsRenderRepoCard] = React.useState(false);
 
+  const renderUserCard = userData.map((user,index) => (
+    <UserCard
+      props={{
+        name: user.name,
+        twitter: user.twitter,
+        avatar: user.avatar,
+      }}
+    />
+  ))
   const renderRepoCard = () => {
     setIsRenderRepoCard(!isRenderRepoCard);
   };
@@ -36,42 +72,11 @@ function App(props) {
         display: 'flex',
         justifyContent: 'center',
       }} >
-        <TextField id="standard-basic" label="Standard" variant="standard"/>
+        <TextField id="standard-basic" label="Standard" variant="standard" />
       </Toolbar>
 
       <List>
-        <UserCard
-          props={{
-            name: "ZMK firmware",
-            twitter: "@johndoe",
-            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
-            renderRepo: renderRepoCard
-          }}
-        />
-        <UserCard
-          props={{
-            name: "ZMK firmware",
-            twitter: "@johndoe",
-            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
-            renderRepo: renderRepoCard
-          }}
-        />
-        <UserCard
-          props={{
-            name: "ZMK firmware",
-            twitter: "@johndoe",
-            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
-            renderRepo: renderRepoCard
-          }}
-        />
-        <UserCard
-          props={{
-            name: "ZMK firmware",
-            twitter: "@johndoe",
-            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
-            renderRepo: renderRepoCard
-          }}
-        />
+        {renderUserCard}
       </List>
       <Divider />
     </div>

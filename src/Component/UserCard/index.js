@@ -1,52 +1,50 @@
-import { Card, CardContent, Avatar, Box, Typography, CardActionArea, Button } from "@mui/material";
-import { green } from "@mui/material/colors";
-import { useState } from "react";
+import { Card, CardContent, Avatar, Box, Typography, CardActionArea } from "@mui/material";
+
 
 export const UserCard = ({ props }) => {
-  const {avatar, name, twitter, renderRepo}=props
-  const [isActive, setIsActive] = useState(false);
-  const handleClick = () =>{
-    setIsActive(!isActive);
-  }
+  const { avatar, name, twitter, userCurrent, setUserCurrent } = props
   return (
-    <Card sx={{
-      display: "flex",
-      m: 2,
-      border: 2,
-      borderColor: green[500],
-      borderRadius: 3,
-      bgcolor:isActive ? "Yellow" : "",
-    }} >
-      <CardActionArea onClick={()=>{handleClick(); /*renderRepo()*/}} >
-        <CardContent
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pt: 2,
-            "&:last-child": { pb: 2 }
-          }}
-        >
-          <Avatar
-            variant="rounded"
-            src={avatar}
-            sx={{ width: 48, height: 48 }}
-          />
-          <Box
+    <div
+      style={{ width: "100%", background: userCurrent === name ? 'red' : 'none' }}
+      onClick={() => {
+        console.log("name: ", name)
+        setUserCurrent(name)
+      }}>
+      <Card sx={{
+        display: "flex",
+        width: "100%"
+      }} >
+        <CardActionArea >
+          <CardContent
             sx={{
               display: "flex",
-              alignItems: "center"
-            }}>
-            <Box px={2}>
-              <Typography variant="h6" sx={{ lineHeight: 1 }}>
-                {name}
-              </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {twitter}
-              </Typography>
+              alignItems: "center",
+              pt: 2,
+              "&:last-child": { pb: 2 }
+            }}
+          >
+            <Avatar
+              variant="rounded"
+              src={avatar}
+              sx={{ width: 48, height: 48 }}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center"
+              }}>
+              <Box px={2}>
+                <Typography variant="h6" sx={{ lineHeight: 1 }}>
+                  {name}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {twitter}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </div>
   );
 }

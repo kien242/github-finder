@@ -1,4 +1,4 @@
-import * as React from 'react';
+import react, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,23 +10,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { UserCard } from './Component/UserCard';
+import { ListItemButton, TextField } from '@mui/material';
+import { green } from '@mui/material/colors';
 import RepoCard from './Component/RepoCard';
-import { TextField } from '@mui/material';
 
-const drawerWidth = 350;
+const drawerWidth = 325;
 const userData = [
   {
-    name: "ZMK firmware",
+    name: "a",
     twitter: "kien242",
     avatar: "https://marmelab.com/posters/avatar-46.jpeg"
   },
   {
-    name: "ZMK firmware",
+    name: "b",
     twitter: "kien24",
     avatar: "https://marmelab.com/posters/avatar-46.jpeg"
   },
   {
-    name: "ZMK frmware",
+    name: "c",
     twitter: "kien242",
     avatar: "https://marmelab.com/posters/avatar-46.jpeg"
   },
@@ -36,7 +37,22 @@ const userData = [
     avatar: "https://marmelab.com/posters/avatar-46.jpeg"
   },
   {
-    name: "ZMKware",
+    name: "ZMKwae",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZKware",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "ZMKwae",
+    twitter: "kien242",
+    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+  },
+  {
+    name: "Kware",
     twitter: "kien242",
     avatar: "https://marmelab.com/posters/avatar-46.jpeg"
   }
@@ -44,22 +60,28 @@ const userData = [
 
 function App(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isRenderRepoCard, setIsRenderRepoCard] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [userCurrent, setUserCurrent] = useState('')
 
-  const renderUserCard = userData.map((user,index) => (
-    <UserCard
-      props={{
-        name: user.name,
-        twitter: user.twitter,
-        avatar: user.avatar,
-      }}
-    />
+  const renderUserCard = userData.map((user, index) => (
+    <ListItemButton sx={{
+      p: 0,
+      m: 1,
+      border: 2,
+      borderColor: green[500],
+      borderRadius: 2,
+    }} >
+      <UserCard
+        props={{
+          name: user.name,
+          twitter: user.twitter,
+          avatar: user.avatar,
+          userCurrent: userCurrent,
+          setUserCurrent: setUserCurrent
+        }}
+      />
+    </ListItemButton>
   ))
-  const renderRepoCard = () => {
-    setIsRenderRepoCard(!isRenderRepoCard);
-  };
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -72,9 +94,8 @@ function App(props) {
         display: 'flex',
         justifyContent: 'center',
       }} >
-        <TextField id="standard-basic" label="Standard" variant="standard" />
+        <TextField id="standard-basic" label="Github User" variant="standard" />
       </Toolbar>
-
       <List>
         {renderUserCard}
       </List>
@@ -82,7 +103,7 @@ function App(props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container = window !== undefined ? () => window().document.boady : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -158,7 +179,15 @@ function App(props) {
         }}
       >
         <Toolbar />
-        {isRenderRepoCard ? <RepoCard /> : null}
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
+        <RepoCard />
       </Box>
     </Box>
   )

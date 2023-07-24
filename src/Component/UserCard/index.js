@@ -1,58 +1,52 @@
-import { Card, CardContent, Avatar, Box, Typography, IconButton, CardActionArea } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Card, CardContent, Avatar, Box, Typography, CardActionArea, Button } from "@mui/material";
+import { green } from "@mui/material/colors";
+import { useState } from "react";
 
-export const UserCard = ({ user }) => (
-  <Card sx={{
-    maxWidth: "100%",
-    display: "inline-block",
-    bgcolor: "green",
-    m: 1,
-    borderRadius: 4
-  }}>
-    <CardContent
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        pt: 2,
-        "&:last-child": { pb: 2 }
-      }}
-    >
-      <Avatar
-        variant="rounded"
-        src={user.avatar}
-        sx={{ width: 48, height: 48 }}
-      />
-
-      <CardActionArea>
-        <Box
+export const UserCard = ({ props }) => {
+  const {avatar, name, twitter, renderRepo}=props
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = () =>{
+    setIsActive(!isActive);
+  }
+  return (
+    <Card sx={{
+      display: "flex",
+      m: 2,
+      border: 2,
+      borderColor: green[500],
+      borderRadius: 3,
+      bgcolor:isActive ? "Yellow" : "",
+    }} >
+      <CardActionArea onClick={()=>{handleClick(); renderRepo()}} >
+        <CardContent
           sx={{
             display: "flex",
-            alignItems: "center"
-          }}>
-          <Box px={3}>
-            <Typography variant="h6" sx={{ lineHeight: 1 }}>
-              {user.name}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {user.twitter}
-            </Typography>
-          </Box>
-
-          <IconButton
-            size="small"
+            alignItems: "center",
+            pt: 2,
+            "&:last-child": { pb: 2 }
+          }}
+        >
+          <Avatar
+            variant="rounded"
+            src={avatar}
+            sx={{ width: 48, height: 48 }}
+          />
+          <Box
             sx={{
-              bgcolor: "#fff",
-              boxShadow: "0 1px 4px 0 rgba(0,0,0,0.12)",
-              "&:hover": {
-                bgcolor: "#fff",
-                color: "#000"
-              }
-            }}
-          >
-            <AddIcon />
-          </IconButton>
-        </Box>
+              display: "flex",
+              alignItems: "center"
+            }}>
+            <Box px={2}>
+              <Typography variant="h6" sx={{ lineHeight: 1 }}>
+                {name}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {twitter}
+              </Typography>
+            </Box>
+          </Box>
+        </CardContent>
       </CardActionArea>
-    </CardContent>
-  </Card>
-);
+    </Card>
+  );
+}

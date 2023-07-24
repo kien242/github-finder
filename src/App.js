@@ -5,24 +5,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import RecipeReviewCard from './Component/RepoCard';
 import { UserCard } from './Component/UserCard';
+import RepoCard from './Component/RepoCard';
+import { TextField } from '@mui/material';
 
-const drawerWidth = 300;
+const drawerWidth = 350;
 
 function App(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isRenderRepoCard, setIsRenderRepoCard] = React.useState(false);
+
+  const renderRepoCard = () => {
+    setIsRenderRepoCard(!isRenderRepoCard);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -30,39 +30,48 @@ function App(props) {
 
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
+      <Toolbar sx={{
+        borderBottom: 3,
+        borderColor: "violet",
+        display: 'flex',
+        justifyContent: 'center',
+      }} >
+        <TextField id="standard-basic" label="Standard" variant="standard"/>
+      </Toolbar>
+
       <List>
-        <UserCard         
-        user={{
-          name: "ZMK firmware",
-          twitter: "@johndoe",
-          avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
-        }}/>
-                <UserCard         
-        user={{
-          name: "ZMK firmware",
-          twitter: "@johndoe",
-          avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
-        }}/>
-                <UserCard         
-        user={{
-          name: "ZMK firmware",
-          twitter: "@johndoe",
-          avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
-        }}/>
-                <UserCard         
-        user={{
-          name: "ZMK firmware",
-          twitter: "@johndoe",
-          avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
-        }}/>
-                <UserCard         
-        user={{
-          name: "ZMK firmware",
-          twitter: "@johndoe",
-          avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32"
-        }}/>
+        <UserCard
+          props={{
+            name: "ZMK firmware",
+            twitter: "@johndoe",
+            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
+            renderRepo: renderRepoCard
+          }}
+        />
+        <UserCard
+          props={{
+            name: "ZMK firmware",
+            twitter: "@johndoe",
+            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
+            renderRepo: renderRepoCard
+          }}
+        />
+        <UserCard
+          props={{
+            name: "ZMK firmware",
+            twitter: "@johndoe",
+            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
+            renderRepo: renderRepoCard
+          }}
+        />
+        <UserCard
+          props={{
+            name: "ZMK firmware",
+            twitter: "@johndoe",
+            avatar: "https://marmelab.com/posters/avatar-46.jpeg?size=32x32",
+            renderRepo: renderRepoCard
+          }}
+        />
       </List>
       <Divider />
     </div>
@@ -71,17 +80,6 @@ function App(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-<<<<<<< HEAD
-    <ThemeProvider theme={darkTheme}>
-      <Grid container spacing={3} display={'flex'} justifyContent={'center'} >
-          <CollapsibleTable />
-        </Grid>
-    </ThemeProvider>
-  )
-}
-
-export default App;
-=======
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
@@ -101,9 +99,12 @@ export default App;
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" >
-            Repo
-          </Typography>
+          <Box display={'flex'} justifyContent={'center'} width={'100%'}>
+            <Typography variant="h6" noWrap component="div" fontSize={30}>
+              Repo
+            </Typography>
+          </Box>
+
         </Toolbar>
       </AppBar>
       <Box
@@ -122,7 +123,10 @@ export default App;
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper':
+            {
+              boxSizing: 'border-box', width: drawerWidth
+            },
           }}
         >
           {drawer}
@@ -138,27 +142,21 @@ export default App;
           {drawer}
         </Drawer>
       </Box>
+
+
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` }
+        }}
       >
         <Toolbar />
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
-        <RecipeReviewCard/>
+        {isRenderRepoCard ? <RepoCard /> : null}
       </Box>
     </Box>
   )
 }
 
 export default App;
->>>>>>> main

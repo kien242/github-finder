@@ -1,11 +1,14 @@
 import { Card, CardContent, Avatar, Box, Typography, CardActionArea } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 
 export const UserCard = ({ props }) => {
   const { avatar, name, twitter, userCurrent, setUserCurrent } = props
   return (
-    <div
-      style={{ width: "100%", background: userCurrent === name ? 'red' : 'none' }}
+    <Box
+      sx={{
+        width: "100%",
+      }}
       onClick={() => {
         console.log("name: ", name)
         setUserCurrent(name)
@@ -13,13 +16,14 @@ export const UserCard = ({ props }) => {
       <Card sx={{
         display: "flex",
         width: "100%"
-      }} >
+      }}>
         <CardActionArea >
           <CardContent
             sx={{
               display: "flex",
               alignItems: "center",
               pt: 2,
+              backgroundColor: userCurrent === name ? red[200] : "",
               "&:last-child": { pb: 2 }
             }}
           >
@@ -45,6 +49,6 @@ export const UserCard = ({ props }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-    </div>
+    </Box>
   );
 }

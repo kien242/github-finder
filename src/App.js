@@ -64,7 +64,7 @@ function App(props) {
   const [userCurrent, setUserCurrent] = useState('')
 
   const renderUserCard = userData.map((user, index) => (
-    <ListItemButton sx={{
+    <ListItemButton key={index} sx={{
       p: 0,
       m: 1,
       border: 2,

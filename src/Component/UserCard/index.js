@@ -7,22 +7,17 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-import { useState } from "react";
 
 export const UserCard = ({ props }) => {
-  const { name, userCurrent, setUserCurrent } = props;
-  const [user, setUser] = useState([]);
-  const getUserInfo = (userName) => {
-    fetch(`https://api.github.com/users/${userName}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        setUser(data);
-      });
-  };
-  console.log(user);
+  const {
+    name,
+    avatar_url,
+    public_repos,
+    following,
+    followers,
+    userCurrent,
+    setUserCurrent,
+  } = props;
 
   return (
     <Box
@@ -32,7 +27,6 @@ export const UserCard = ({ props }) => {
       onClick={() => {
         console.log("name: ", name);
         setUserCurrent(name);
-        getUserInfo(name);
       }}
     >
       <Card
@@ -46,6 +40,7 @@ export const UserCard = ({ props }) => {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "space-around",
               pt: 2,
               backgroundColor: userCurrent === name ? red[200] : "",
               "&:last-child": { pb: 2 },
@@ -53,7 +48,7 @@ export const UserCard = ({ props }) => {
           >
             <Avatar
               variant="rounded"
-              src={user.avatar_url}
+              src={avatar_url}
               sx={{ width: 48, height: 48 }}
             />
             <Box
@@ -62,13 +57,20 @@ export const UserCard = ({ props }) => {
                 alignItems: "center",
               }}
             >
-              <Box px={2}>
-                <Typography variant="h6" sx={{ lineHeight: 1 }}>
-                  {name}
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  {user.public_repos}
-                </Typography>
+              <Box>
+                <Box>
+                  <Typography variant="h6" sx={{ lineHeight: 1 }}>
+                    {name}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="caption" color="textSecondary" pr={2}>
+                    Followers:{followers}
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary">
+                    Following:{following}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           </CardContent>

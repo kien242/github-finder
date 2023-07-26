@@ -17,44 +17,7 @@ import RepoCard from './Component/RepoCard';
 const drawerWidth = 325;
 const userData = [
   {
-    name: "a",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "b",
-    twitter: "kien24",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "c",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "ZMK firmware",
-    twitter: "kie42",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "ZMKwae",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "ZKware",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "ZMKwae",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
-  },
-  {
-    name: "Kware",
-    twitter: "kien242",
-    avatar: "https://marmelab.com/posters/avatar-46.jpeg"
+    name: "kien242"
   }
 ]
 
@@ -74,8 +37,6 @@ function App(props) {
       <UserCard
         props={{
           name: user.name,
-          twitter: user.twitter,
-          avatar: user.avatar,
           userCurrent: userCurrent,
           setUserCurrent: setUserCurrent
         }}
@@ -127,7 +88,7 @@ function App(props) {
           </IconButton>
           <Box display={'flex'} justifyContent={'center'} width={'100%'}>
             <Typography variant="h6" noWrap component="div" fontSize={30}>
-              Repo
+              Repo of {userCurrent}
             </Typography>
           </Box>
 

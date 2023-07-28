@@ -1,0 +1,4 @@
+login
+avatar_url
+followers
+followings

@@ -107,13 +107,13 @@ export const RepoCard = ({ props }) => {
               alignItems={"center"}
               width={"60%"}
             >
-              <Box width={"10%"}>
+              <Box width={"15%"}>
                 <Typography>Star: {repoStar}</Typography>
               </Box>
-              <Box width={"45%"}>
+              <Box width={"40%"}>
                 <Typography>Language: {repoLanguage}</Typography>
               </Box>
-              <Box width={"45%"}>
+              <Box width={"40%"}>
                 <Typography>License: {license}</Typography>
               </Box>
             </Box>

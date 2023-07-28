@@ -32,15 +32,24 @@ function App(props) {
   const [isFind, setIsFind] = useState(false);
 
   useEffect(() => {
-    fetch(`https://64bdfe1c2320b36433c7f28d.mockapi.io/api/v1/githubUser`)
+    fetch(
+      `https://64bdfe1c2320b36433c7f28d.mockapi.io/api/v1/SaveGithubUserInfo`
+    )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         setUserList(data);
       });
-  }, []);
 
+    // const user = {
+    //   userName: "scottbez1",
+    //   avatarUrl: "https://avatars.githubusercontent.com/u/414890?v=4",
+    //   followers: "1078",
+    //   following: "5",
+    // };
+    // APIServices.postSaveUser(user);
+  }, []);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -89,9 +98,9 @@ function App(props) {
         <UserCard
           props={{
             name: users.userName,
-            avatar_url: user.avatar_url,
-            following: user.following,
-            followers: user.followers,
+            avatar_url: users.avatarUrl,
+            following: users.following,
+            followers: users.followers,
             userCurrent: userCurrent,
             setUserCurrent: setUserCurrent,
             getListRepoInfo: getListRepoInfo,
@@ -105,9 +114,6 @@ function App(props) {
     setText(event.target.value);
     event.target.value ? setIsFind(true) : setIsFind(false);
   };
-  console.log(isFind);
-  console.log(text);
-  console.log(userList);
   const drawer = (
     <div>
       <Toolbar

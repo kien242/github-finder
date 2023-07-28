@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   Toolbar,
@@ -16,89 +16,98 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { green } from "@mui/material/colors";
 import { UserCard } from "./Component/UserCard";
 import RepoCard from "./Component/RepoCard";
+import APIServices from "./Service";
 
 const drawerWidth = 325;
-const userData = [
-  {
-    name: "hungTrinhIT",
-  },
-];
 
 function App(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [userCurrent, setUserCurrent] = useState("");
+
+  const [userList, setUserList] = useState([]);
+  const [repoList, setRepoList] = useState([]);
+
   const [user, setUser] = useState([]);
-  const [repoList, setRepoList] = useState([])
+  const [userCurrent, setUserCurrent] = useState("");
+  const [isFind, setIsFind] = useState(false);
 
-  const getUserInfo = (userName) => {
-    fetch(`https://api.github.com/users/${userName}`)
+  useEffect(() => {
+    fetch(`https://64bdfe1c2320b36433c7f28d.mockapi.io/api/v1/githubUser`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setUser(data);
+        setUserList(data);
       });
-  };
-
-  const getRepoInfo = (userName) => {
-    fetch(`https://api.github.com/users/${userName}/repos`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setRepoList(data);
-      });
-  };
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  useEffect(() => {
-    getUserInfo("hungTrinhIT");
-  }, []);
-
-  const renderUserCard = userData.map((users, index) => (
-    <ListItemButton
-      key={index}
-      sx={{
-        p: 0,
-        m: 1,
-        border: 2,
-        borderColor: green[500],
-        borderRadius: 2,
-      }}
-    >
-      <UserCard
-        props={{
-          name: users.name,
-          avatar_url: user.avatar_url,
-          following: user.following,
-          followers: user.followers,
-          userCurrent: userCurrent,
-          setUserCurrent: setUserCurrent,
-        }}
-      />
-    </ListItemButton>
-  ));
-  const renderReposCard = (user) => {
-    getRepoInfo(user);
-    return (
-      <>
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-        <RepoCard />
-      </>
-    );
+  const getUserInfo = (userName) => {
+    APIServices.getInfoUser(userName).then((data) => {
+      setUser(data);
+    });
   };
 
+  const getListRepoInfo = (userName) => {
+    APIServices.getListAllPublicRepos(userName).then((data) => {
+      setRepoList(data);
+    });
+  };
+
+  const renderRepoList = repoList.map(function (repo) {
+    return (
+      <RepoCard
+        key={repo.id}
+        props={{
+          repoName: repo.name,
+          repoDescription: repo.description,
+          repoStar: repo.stargazers_count,
+          repoLanguage: repo.language ? repo.language : "unknow",
+          license: repo.license ? repo.license.name : "unknow",
+          clone_url: repo.clone_url,
+        }}
+      />
+    );
+  });
+
+  const renderUserCard = userList.map(function (users) {
+    // getUserInfo(`${users.userName}`)
+    return (
+      <ListItemButton
+        key={users.id}
+        sx={{
+          p: 0,
+          m: 1,
+          border: 2,
+          borderColor: green[500],
+          borderRadius: 2,
+        }}
+      >
+        <UserCard
+          props={{
+            name: users.userName,
+            avatar_url: user.avatar_url,
+            following: user.following,
+            followers: user.followers,
+            userCurrent: userCurrent,
+            setUserCurrent: setUserCurrent,
+            getListRepoInfo: getListRepoInfo,
+          }}
+        />
+      </ListItemButton>
+    );
+  });
+  const [text, setText] = useState("");
+  const handleChange = (event) => {
+    setText(event.target.value);
+    event.target.value ? setIsFind(true) : setIsFind(false);
+  };
+  console.log(isFind);
+  console.log(text);
+  console.log(userList);
   const drawer = (
     <div>
       <Toolbar
@@ -109,15 +118,20 @@ function App(props) {
           justifyContent: "center",
         }}
       >
-        <TextField id="standard-basic" label="Github User" variant="standard" />
+        <TextField
+          id="standard-basic"
+          label="Github User"
+          variant="standard"
+          onChange={handleChange}
+        />
       </Toolbar>
-      <List>{renderUserCard}</List>
+      <List>{isFind ? "" : renderUserCard}</List>
       <Divider />
     </div>
   );
 
   const container =
-    window !== undefined ? () => window().document.boady : undefined;
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -194,7 +208,7 @@ function App(props) {
         }}
       >
         <Toolbar />
-        {/* {renderReposCard(userCurrent)} */}
+        {renderRepoList}
       </Box>
     </Box>
   );

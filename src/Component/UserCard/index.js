@@ -6,17 +6,17 @@ import {
   Typography,
   CardActionArea,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 
 export const UserCard = ({ props }) => {
   const {
     name,
     avatar_url,
-    public_repos,
     following,
     followers,
     userCurrent,
     setUserCurrent,
+    getListRepoInfo,
   } = props;
 
   return (
@@ -25,8 +25,8 @@ export const UserCard = ({ props }) => {
         width: "100%",
       }}
       onClick={() => {
-        console.log("name: ", name);
         setUserCurrent(name);
+        getListRepoInfo(name);
       }}
     >
       <Card
@@ -42,7 +42,7 @@ export const UserCard = ({ props }) => {
               alignItems: "center",
               justifyContent: "space-around",
               pt: 2,
-              backgroundColor: userCurrent === name ? red[200] : "",
+              backgroundColor: userCurrent === name ? green[200] : "",
               "&:last-child": { pb: 2 },
             }}
           >

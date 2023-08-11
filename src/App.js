@@ -17,7 +17,7 @@ import {
   DialogContent,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import UserCard from "./Component/UserCard";
 import RepoCard from "./Component/RepoCard";
 import APIServices from "./Service";
@@ -36,15 +36,16 @@ function App() {
   const [isFind, setIsFind] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleClickOpenDialog = () => {
-    setDialogOpen(true);
-  };
   const handleCloseDialog = () => {
     setDialogOpen(false);
   };
 
   useEffect(() => {
-    setUserList(JSON.parse(localStorage.getItem("dataKey") || ""));
+    if (localStorage.getItem("dataKey") !== null) {
+      setUserList(JSON.parse(localStorage.getItem("dataKey") || ""));
+    } else {
+      localStorage.setItem("dataKey", []);
+    }
   }, []);
 
   const handleDrawerToggle = () => {
@@ -141,7 +142,6 @@ function App() {
 
   const addGithubuser = () => {
     APIServices.getInfoUser(findName).then((data) => {
-      console.log(data);
       if (data === 404) {
         setIsExist(false);
         setDialogOpen(true);
@@ -214,7 +214,6 @@ function App() {
     </div>
   );
 
-  console.log(dialogOpen);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -302,7 +301,9 @@ function App() {
             alignItems: "center",
           }}
         >
-          <ErrorOutlineIcon sx={{ fontSize: "150px", color: red[500] }} />
+          <SentimentVeryDissatisfiedIcon
+            sx={{ fontSize: "150px", color: red[500] }}
+          />
         </DialogContent>
         <DialogActions>
           <Button

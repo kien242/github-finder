@@ -4,69 +4,72 @@ import {
   Toolbar,
   List,
   IconButton,
-  ListItemButton,
   Drawer,
   TextField,
   AppBar,
   Box,
   CssBaseline,
   Divider,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { green } from "@mui/material/colors";
-import { UserCard } from "./Component/UserCard";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import UserCard from "./Component/UserCard";
 import RepoCard from "./Component/RepoCard";
 import APIServices from "./Service";
+import { red } from "@mui/material/colors";
 
 const drawerWidth = 325;
 
-function App(props) {
-  const { window } = props;
+function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [userList, setUserList] = useState([]);
   const [repoList, setRepoList] = useState([]);
+  const [userFindList, setUserFindList] = useState([]);
 
-  const [user, setUser] = useState([]);
   const [userCurrent, setUserCurrent] = useState("");
   const [isFind, setIsFind] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleClickOpenDialog = () => {
+    setDialogOpen(true);
+  };
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
-    fetch(
-      `https://64bdfe1c2320b36433c7f28d.mockapi.io/api/v1/SaveGithubUserInfo`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setUserList(data);
-      });
-
-    // const user = {
-    //   userName: "scottbez1",
-    //   avatarUrl: "https://avatars.githubusercontent.com/u/414890?v=4",
-    //   followers: "1078",
-    //   following: "5",
-    // };
-    // APIServices.postSaveUser(user);
+    setUserList(JSON.parse(localStorage.getItem("dataKey") || ""));
   }, []);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const getUserInfo = (userName) => {
-    APIServices.getInfoUser(userName).then((data) => {
-      setUser(data);
-    });
-  };
-
+  const [isRenderRepoList, setIsRenderRepoList] = useState(false);
   const getListRepoInfo = (userName) => {
     APIServices.getListAllPublicRepos(userName).then((data) => {
       setRepoList(data);
+      setIsRenderRepoList(true);
     });
   };
 
-  const renderRepoList = repoList.map(function (repo) {
+  const deleteUser = (id) => {
+    const newListUser = userList.filter((user) => {
+      if (user.id === id && user.userName === userCurrent) {
+        setIsRenderRepoList(false);
+        setUserCurrent("");
+      }
+      return user.id !== id;
+    });
+    setUserList(newListUser);
+  };
+
+  const renderRepoList = repoList.map((repo) => {
     return (
       <RepoCard
         key={repo.id}
@@ -74,46 +77,104 @@ function App(props) {
           repoName: repo.name,
           repoDescription: repo.description,
           repoStar: repo.stargazers_count,
-          repoLanguage: repo.language ? repo.language : "unknow",
-          license: repo.license ? repo.license.name : "unknow",
+          repoLanguage: repo.language ? repo.language : "unknown",
+          license: repo.license ? repo.license.name : "unknown",
           clone_url: repo.clone_url,
         }}
       />
     );
   });
 
-  const renderUserCard = userList.map(function (users) {
+  const renderUserCard = userList.map((users) => {
     // getUserInfo(`${users.userName}`)
     return (
-      <ListItemButton
+      <UserCard
         key={users.id}
-        sx={{
-          p: 0,
-          m: 1,
-          border: 2,
-          borderColor: green[500],
-          borderRadius: 2,
+        props={{
+          name: users.userName,
+          avatarUrl: users.avatarUrl,
+          following: users.following,
+          follower: users.followers,
+          userCurrent: userCurrent,
+          setUserCurrent: setUserCurrent,
+          getListRepoInfo: getListRepoInfo,
+          deleteUser: () => {
+            deleteUser(users.id);
+          },
         }}
-      >
-        <UserCard
-          props={{
-            name: users.userName,
-            avatar_url: users.avatarUrl,
-            following: users.following,
-            followers: users.followers,
-            userCurrent: userCurrent,
-            setUserCurrent: setUserCurrent,
-            getListRepoInfo: getListRepoInfo,
-          }}
-        />
-      </ListItemButton>
+      />
     );
   });
-  const [text, setText] = useState("");
+  const [findName, setFindName] = useState([]);
   const handleChange = (event) => {
-    setText(event.target.value);
     event.target.value ? setIsFind(true) : setIsFind(false);
+    setFindName(event.target.value);
+    const result = userList.filter((user) => {
+      return user.userName.includes(event.target.value);
+    });
+    setUserFindList(result);
   };
+
+  const renderFindUser = userFindList.map((users) => {
+    // getUserInfo(`${users.userName}`)
+    return (
+      <UserCard
+        key={users.id}
+        props={{
+          name: users.userName,
+          avatarUrl: users.avatarUrl,
+          following: users.following,
+          follower: users.followers,
+          userCurrent: userCurrent,
+          setUserCurrent: setUserCurrent,
+          getListRepoInfo: getListRepoInfo,
+          deleteUser: () => {
+            deleteUser(users.id);
+          },
+        }}
+      />
+    );
+  });
+
+  const [userExist, setUserExist] = useState({});
+  const [isExist, setIsExist] = useState(false);
+
+  const addGithubuser = () => {
+    APIServices.getInfoUser(findName).then((data) => {
+      console.log(data);
+      if (data === 404) {
+        setIsExist(false);
+        setDialogOpen(true);
+      } else {
+        setIsExist(true);
+        setDialogOpen(false);
+        setUserExist({
+          id: data.id,
+          userName: data.login,
+          followers: data.followers,
+          following: data.following,
+          avatarUrl: data.avatar_url,
+        });
+      }
+      setFindName("");
+      setIsFind(false);
+    });
+  };
+  useEffect(() => {
+    const event = (element) => element.id === userExist.id;
+    if (!userList.some(event) && isExist) {
+      setUserList((userList) => [...userList, userExist]);
+    }
+  }, [userExist]);
+
+  // if (userList.length !== 0) {
+  //   localStorage.setItem("dataKey", JSON.stringify(userList));
+  // }
+
+  useEffect(() => {
+    localStorage.setItem("dataKey", JSON.stringify(userList));
+  }, [userList]);
+
   const drawer = (
     <div>
       <Toolbar
@@ -121,24 +182,39 @@ function App(props) {
           borderBottom: 3,
           borderColor: "violet",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-around",
         }}
       >
         <TextField
           id="standard-basic"
-          label="Github User"
+          label={
+            isFind && userFindList.length === 0
+              ? "Add Github User"
+              : "Find Github User"
+          }
           variant="standard"
           onChange={handleChange}
+          value={findName}
         />
+        {isFind && userFindList.length === 0 ? (
+          <Button
+            variant="contained"
+            onClick={() => {
+              addGithubuser();
+            }}
+          >
+            Add
+          </Button>
+        ) : (
+          ""
+        )}
       </Toolbar>
-      <List>{isFind ? "" : renderUserCard}</List>
+      <List>{isFind ? renderFindUser : renderUserCard}</List>
       <Divider />
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
+  console.log(dialogOpen);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -161,7 +237,8 @@ function App(props) {
           </IconButton>
           <Box display={"flex"} justifyContent={"center"} width={"100%"}>
             <Typography variant="h6" noWrap component="div" fontSize={30}>
-              Repo of {userCurrent}
+              {/* Repo of {userCurrent} */}
+              {userCurrent ? `Repo of  ${userCurrent} ` : ""}
             </Typography>
           </Box>
         </Toolbar>
@@ -173,7 +250,6 @@ function App(props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -214,8 +290,33 @@ function App(props) {
         }}
       >
         <Toolbar />
-        {renderRepoList}
+        {isRenderRepoList ? renderRepoList : ""}
       </Box>
+
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle>User does not exist</DialogTitle>
+        <DialogContent
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ErrorOutlineIcon sx={{ fontSize: "150px", color: red[500] }} />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleCloseDialog}
+            variant="contained"
+            sx={{
+              width: "50%",
+              bgcolor: "red",
+            }}
+          >
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

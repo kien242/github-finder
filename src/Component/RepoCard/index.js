@@ -10,6 +10,7 @@ import {
   Button,
   Box,
   Tooltip,
+  Link,
 } from "@mui/material";
 import { green, red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -27,7 +28,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const RepoCard = ({ props }) => {
+const RepoCard = ({ props }) => {
   const {
     repoName,
     repoDescription,
@@ -39,6 +40,7 @@ export const RepoCard = ({ props }) => {
 
   const [expanded, setExpanded] = React.useState(false);
   const [isCopied, setIsCopied] = React.useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -92,15 +94,23 @@ export const RepoCard = ({ props }) => {
         }
         title={
           <Box display={"flex"} flexDirection={"row"}>
-            <Typography
-              align="left"
-              mr={1}
-              width={"30%"}
-              borderRight={4}
-              borderColor={red[500]}
+            <Link
+              color="inherit"
+              underline="hover"
+              href={clone_url}
+              target="_blank"
+              rel="noreferrer"
+              variant="h6"
+              sx={{
+                align: "left",
+                mr: 1,
+                width: "30%",
+                borderRight: 4,
+                borderColor: red[500],
+              }}
             >
               {repoName}
-            </Typography>
+            </Link>
             <Box
               display={"flex"}
               flexDirection={"row"}
